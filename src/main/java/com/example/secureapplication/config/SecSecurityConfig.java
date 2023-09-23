@@ -1,5 +1,6 @@
 package com.example.secureapplication.config;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -8,38 +9,43 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 import static org.springframework.security.config.Customizer.withDefaults;
-
+//TODO:Remove the logger
+// - remove userDetails
+@Slf4j
 @Configuration
 @EnableWebSecurity
 public class SecSecurityConfig {
 
     @Bean
     public InMemoryUserDetailsManager userDetailsService() {
-        UserDetails user1 = User.withUsername("user1")
-                .password(passwordEncoder().encode("user1Pass"))
-                .roles("USER")
-                .build();
-        UserDetails user2 = User.withUsername("user2")
-                .password(passwordEncoder().encode("user2Pass"))
+        InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
+        UserDetails user = User.withUsername("user")
+                .password(passwordEncoder().encode("userPass1"))
                 .roles("USER")
                 .build();
         UserDetails admin = User.withUsername("admin")
-                .password(passwordEncoder().encode("adminPass"))
+                .password(passwordEncoder().encode("adminPass1"))
                 .roles("ADMIN")
                 .build();
-        return new InMemoryUserDetailsManager(user1, user2, admin);
+        manager.createUser(user);
+        manager.createUser(admin);
+        return manager;
     }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeRequests()
-                .anyRequest().authenticated()
-                .and()
-                .httpBasic(withDefaults());
+                .authorizeHttpRequests((authz) -> authz
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/user").hasRole("USER")
+                        .requestMatchers("/info").permitAll()
+                        .anyRequest().authenticated()
+                );
+
         return http.build();
     }
 
@@ -47,45 +53,4 @@ public class SecSecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
- /**
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf()
-                .disable()
-                .authorizeRequests()
-                .antMatchers("/admin/**")
-                .hasRole("ADMIN")
-                .antMatchers("/anonymous*")
-                .anonymous()
-                .antMatchers("/login*")
-                .permitAll()
-                .anyRequest()
-                .authenticated()
-                .and()
-                .formLogin()
-                .loginPage("/login.html")
-                .loginProcessingUrl("/perform_login")
-                .defaultSuccessUrl("/homepage.html", true)
-                .failureUrl("/login.html?error=true")
-                .failureHandler(authenticationFailureHandler())
-                .and()
-                .logout()
-                .logoutUrl("/perform_logout")
-                .deleteCookies("JSESSIONID")
-                .logoutSuccessHandler(logoutSuccessHandler());
-
-        return http.build();
-    }
-*/
-
-    private Object logoutSuccessHandler() {
-        return null;
-    }
-
-    private Object authenticationFailureHandler() {
-        return null;
-    }
-
-
-
 }

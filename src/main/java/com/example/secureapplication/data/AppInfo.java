@@ -1,5 +1,6 @@
 package com.example.secureapplication.data;
 
+
 import org.springframework.stereotype.Component;
 
 @Component
