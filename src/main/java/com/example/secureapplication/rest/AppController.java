@@ -1,6 +1,7 @@
 package com.example.secureapplication.rest;
 
 
+import com.example.secureapplication.data.AboutApp;
 import com.example.secureapplication.data.AppInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,14 +16,23 @@ import org.springframework.web.bind.annotation.RestController;
 public class AppController {
 
     private final AppInfo appInfo;
+    private final AboutApp aboutApp;
 
-    public AppController(AppInfo appInfo) {
+    public AppController(AppInfo appInfo, AboutApp aboutApp) {
+
         this.appInfo = appInfo;
+        this.aboutApp = aboutApp;
     }
     @GetMapping("/info")
     public String getInfo() {
         log.info("Trying to get the application info resource");
         return appInfo.getAppInfoTemplate();
+    }
+
+    @GetMapping("/about")
+    public String about() {
+        log.info("Trying to get the public resource");
+        return aboutApp.aboutApp();
     }
 
     @GetMapping("/user")

@@ -41,8 +41,8 @@ public class SecSecurityConfig {
         http
                 .authorizeHttpRequests((authz) -> authz
                         .requestMatchers("/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/user").hasRole("USER")
-                        .requestMatchers("/info").permitAll()
+                        .requestMatchers("/info").hasRole("USER")
+                        .requestMatchers("/about").permitAll()
                         .anyRequest().authenticated()
                 );
 
