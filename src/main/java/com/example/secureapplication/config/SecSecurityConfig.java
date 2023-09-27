@@ -15,26 +15,27 @@ import org.springframework.security.web.SecurityFilterChain;
 import static org.springframework.security.config.Customizer.withDefaults;
 //TODO:Remove the logger
 // - remove userDetails
+// - is it better to use ENUM for static values, like User roles?
 @Slf4j
 @Configuration
 @EnableWebSecurity
 public class SecSecurityConfig {
 
-    @Bean
-    public InMemoryUserDetailsManager userDetailsService() {
-        InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-        UserDetails user = User.withUsername("user")
-                .password(passwordEncoder().encode("userPass1"))
-                .roles("USER")
-                .build();
-        UserDetails admin = User.withUsername("admin")
-                .password(passwordEncoder().encode("adminPass1"))
-                .roles("ADMIN")
-                .build();
-        manager.createUser(user);
-        manager.createUser(admin);
-        return manager;
-    }
+//    @Bean
+//    public InMemoryUserDetailsManager userDetailsService() {
+//        InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
+//        UserDetails user = User.withUsername("user")
+//                .password(passwordEncoder().encode("userPass1"))
+//                .roles("USER")
+//                .build();
+//        UserDetails admin = User.withUsername("admin")
+//                .password(passwordEncoder().encode("adminPass1"))
+//                .roles("ADMIN")
+//                .build();
+//        manager.createUser(user);
+//        manager.createUser(admin);
+//        return manager;
+//    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {

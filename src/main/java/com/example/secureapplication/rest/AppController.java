@@ -3,9 +3,12 @@ package com.example.secureapplication.rest;
 
 import com.example.secureapplication.data.AboutApp;
 import com.example.secureapplication.data.AppInfo;
+import com.example.secureapplication.service.UserDetailsServiceImpl;
+import com.example.secureapplication.user.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -18,10 +21,13 @@ public class AppController {
     private final AppInfo appInfo;
     private final AboutApp aboutApp;
 
-    public AppController(AppInfo appInfo, AboutApp aboutApp) {
+    private final UserDetailsServiceImpl userDetailsService;
+
+    public AppController(AppInfo appInfo, AboutApp aboutApp, UserDetailsServiceImpl userDetailsService) {
 
         this.appInfo = appInfo;
         this.aboutApp = aboutApp;
+        this.userDetailsService = userDetailsService;
     }
     @GetMapping("/info")
     public String getInfo() {
@@ -38,5 +44,10 @@ public class AppController {
     @GetMapping("/user")
     public void getUserInfo(){
         log.info("User resource place holder");
+    }
+
+    @PostMapping("/user")
+    public void createUser(@RequestBody User user) {
+        userDetailsService.createUser(user);
     }
 }

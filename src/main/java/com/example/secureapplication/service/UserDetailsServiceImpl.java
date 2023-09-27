@@ -24,4 +24,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         }
         return new UserDetailsImpl(user);
     }
+
+    public UserDetails createUser(User user) {
+        User newUser = userRepository.save(user);
+        return new UserDetailsImpl(newUser);
+    }
 }
