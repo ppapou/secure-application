@@ -1,18 +1,17 @@
 package com.example.secureapplication.user;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
 import java.io.Serializable;
 
+@Data
 @Entity
 @Table(name = "roles")
-@AllArgsConstructor
+/*@AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@Setter
+@Setter*/
 public class Role implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,22 +1,20 @@
 package com.example.secureapplication.user;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 
+@Data
 @Entity
 @Table(name = "users")
-@AllArgsConstructor
+/*@AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@Setter
+@Setter*/
 public class User implements Serializable {
 
     @Id
