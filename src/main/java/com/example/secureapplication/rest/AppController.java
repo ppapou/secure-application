@@ -3,7 +3,7 @@ package com.example.secureapplication.rest;
 
 import com.example.secureapplication.data.AboutApp;
 import com.example.secureapplication.data.AppInfo;
-import com.example.secureapplication.service.UserDetailsServiceImpl;
+import com.example.secureapplication.service.AppUserDetailsService;
 import com.example.secureapplication.user.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,9 +21,9 @@ public class AppController {
     private final AppInfo appInfo;
     private final AboutApp aboutApp;
 
-    private final UserDetailsServiceImpl userDetailsService;
+    private final AppUserDetailsService userDetailsService;
 
-    public AppController(AppInfo appInfo, AboutApp aboutApp, UserDetailsServiceImpl userDetailsService) {
+    public AppController(AppInfo appInfo, AboutApp aboutApp, AppUserDetailsService userDetailsService) {
 
         this.appInfo = appInfo;
         this.aboutApp = aboutApp;

@@ -2,17 +2,17 @@ package com.example.secureapplication.service;
 
 import com.example.secureapplication.repo.UserRepository;
 import com.example.secureapplication.user.User;
-import com.example.secureapplication.user.UserDetailsImpl;
+import com.example.secureapplication.user.AppUserDetails;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserDetailsServiceImpl implements UserDetailsService {
+public class AppUserDetailsService implements UserDetailsService {
     private final UserRepository userRepository;
 
-    public UserDetailsServiceImpl(UserRepository userRepository) {
+    public AppUserDetailsService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
@@ -22,11 +22,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException("User not found");
         }
-        return new UserDetailsImpl(user);
+        return new AppUserDetails(user);
     }
 
     public UserDetails createUser(User user) {
         User newUser = userRepository.save(user);
-        return new UserDetailsImpl(newUser);
+        return new AppUserDetails(newUser);
     }
 }

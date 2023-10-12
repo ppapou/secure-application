@@ -13,7 +13,7 @@ import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserDetailsImpl implements UserDetails {
+public class AppUserDetails implements UserDetails {
     private User user ;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
