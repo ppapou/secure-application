@@ -13,11 +13,11 @@ import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
-public class AppUserDetails implements UserDetails {
-    private User user ;
+public class AccountDetails implements UserDetails {
+    private AccountRecord accountRecord;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        Set<Role> roles = user.getRoles();
+        Set<Role> roles = accountRecord.getRoles();
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
 
         for (Role role : roles) {
@@ -29,12 +29,12 @@ public class AppUserDetails implements UserDetails {
 
     @Override
     public String getPassword() {
-        return user.getPassword();
+        return accountRecord.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return user.getUsername();
+        return accountRecord.getUsername();
     }
 
     @Override
