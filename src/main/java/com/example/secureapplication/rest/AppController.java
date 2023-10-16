@@ -3,8 +3,8 @@ package com.example.secureapplication.rest;
 
 import com.example.secureapplication.data.AboutApp;
 import com.example.secureapplication.data.AppInfo;
-import com.example.secureapplication.service.UserDetailsServiceImpl;
-import com.example.secureapplication.user.User;
+import com.example.secureapplication.service.AccountDetails;
+import com.example.secureapplication.service.AccountServiceLayerRecord;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,9 +21,9 @@ public class AppController {
     private final AppInfo appInfo;
     private final AboutApp aboutApp;
 
-    private final UserDetailsServiceImpl userDetailsService;
+    private final AccountDetails userDetailsService;
 
-    public AppController(AppInfo appInfo, AboutApp aboutApp, UserDetailsServiceImpl userDetailsService) {
+    public AppController(AppInfo appInfo, AboutApp aboutApp, AccountDetails userDetailsService) {
 
         this.appInfo = appInfo;
         this.aboutApp = aboutApp;
@@ -47,7 +47,7 @@ public class AppController {
     }
 
     @PostMapping("/user")
-    public void createUser(@RequestBody User user) {
-        userDetailsService.createUser(user);
+    public void createUser(@RequestBody AccountServiceLayerRecord accountRecord) {
+        userDetailsService.createUser(accountRecord);
     }
 }

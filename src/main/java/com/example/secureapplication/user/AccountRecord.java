@@ -11,11 +11,7 @@ import java.util.Set;
 @Data
 @Entity
 @Table(name = "users")
-/*@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter*/
-public class User implements Serializable {
+public class AccountRecord implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
